@@ -14,7 +14,7 @@ implemented as different layers of abstractions.
 
 ** Schema generated HTTP layer
 
-The `cl-infinidash.raw` package is responsible for fetching and
+The =cl-infinidash.raw= package is responsible for fetching and
 parsing the JSON schema for AWS Infinidash. It generates the set of
 HTTP GET/POST/PUT methods used to communicate with AWS Infinidash.
 
