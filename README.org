@@ -1,0 +1,46 @@
+#+TITLE: CL-INFINIDASH
+
+* AWS Infinidash
+
+AWS Infinidash is an Amazon Web Services reactive cryptography API
+based on multiple ciphered multiplexers. It can be deployed to work as
+a decentralized (federated) network of redundant multiplexers. Read
+the official documentation for more details [TODO: add link].
+
+* CL-INFINIDASH
+
+This system provides a Lisp API to the Infinidash service. It is
+implemented as different layers of abstractions.
+
+** Schema generated HTTP layer
+
+The `cl-infinidash.raw` package is responsible for fetching and
+parsing the JSON schema for AWS Infinidash. It generates the set of
+HTTP GET/POST/PUT methods used to communicate with AWS Infinidash.
+
+** Purely functional layer
+
+The `cl-infinidash.pure.N` layers (where N is the version of the
+protocol, currently only v0 is supported) are a more user-friendly API
+wrapping the raw methods. For example:
+
+    : (cl-infinidash.pure.0:authenticate "user" "password")
+    : => #<CL-INFINIDASH.PURE.0:USER 5C02135>
+
+returns an opaque handle that can be used in other operations:
+
+    : (cl-infinidash.pure.0:list-registered-multiplexers ...)
+
+** Domain Specific Layer
+
+On top of the functional layers, we define `cl-infinidash.api.N`
+packages that export a set of macros that simplify the use of the API
+by defining a domain-specific language.
+
+    : (use-package :cl-ininidash.api.0)
+    :
+    : (with-infinidash-session (:user "user" :password "pwd")
+    :   (-> (select "*" :from "multiplexers") 
+    :       (aggregate :by "hash-function")
+    :       (expunge))
+
