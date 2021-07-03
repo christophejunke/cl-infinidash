@@ -41,7 +41,7 @@ by defining a domain-specific language.
 (use-package :cl-ininidash.api.0)
 
 (with-infinidash-session (:user "user" :password "pwd")
-  (-> (select "*" :from "multiplexers") 
-      (aggregate :by "hash-function")
-      (expunge))
+  :select "*" :from "multiplexers"
+  :aggregate :by "hash-function"
+  :expunge)
 #+end_src
