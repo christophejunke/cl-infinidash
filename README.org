@@ -20,7 +20,7 @@ HTTP GET/POST/PUT methods used to communicate with AWS Infinidash.
 
 ** Purely functional layer
 
-The `cl-infinidash.pure.N` layers (where N is the version of the
+The =cl-infinidash.pure.N= layers (where N is the version of the
 protocol, currently only v0 is supported) are a more user-friendly API
 wrapping the raw methods. For example:
 
@@ -33,14 +33,15 @@ returns an opaque handle that can be used in other operations:
 
 ** Domain Specific Layer
 
-On top of the functional layers, we define `cl-infinidash.api.N`
+On top of the functional layers, we define =cl-infinidash.api.N=
 packages that export a set of macros that simplify the use of the API
 by defining a domain-specific language.
 
-    : (use-package :cl-ininidash.api.0)
-    :
-    : (with-infinidash-session (:user "user" :password "pwd")
-    :   (-> (select "*" :from "multiplexers") 
-    :       (aggregate :by "hash-function")
-    :       (expunge))
+#+begin_src lisp
+(use-package :cl-ininidash.api.0)
 
+(with-infinidash-session (:user "user" :password "pwd")
+  (-> (select "*" :from "multiplexers") 
+      (aggregate :by "hash-function")
+      (expunge))
+#+end_src
